@@ -1,5 +1,5 @@
 from people import Person, Student, Teacher
-
+from schedule import CourseSchedule
 def main():
     # Create instances of the classes
     p = Person("John", 30, "123 Main St.")
