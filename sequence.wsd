@@ -1,0 +1,30 @@
+@startuml
+actor User
+participant CourseSchedule
+database CourseScheduleDB
+
+User -> CourseSchedule: Request to check for missing classes and attendance
+activate CourseSchedule
+
+CourseSchedule -> CourseScheduleDB: Retrieve courses
+activate CourseScheduleDB
+
+CourseScheduleDB --> CourseSchedule: Course data
+deactivate CourseScheduleDB
+
+CourseSchedule -> CourseScheduleDB: Retrieve student plans
+activate CourseScheduleDB
+
+CourseScheduleDB --> CourseSchedule: Student plan data
+deactivate CourseScheduleDB
+
+CourseSchedule -> CourseSchedule: Check for missing classes
+activate CourseSchedule
+
+CourseSchedule -> CourseSchedule: Check for attendance
+activate CourseSchedule
+
+CourseSchedule --> User: Report missing classes and attendance
+deactivate CourseSchedule
+
+@enduml

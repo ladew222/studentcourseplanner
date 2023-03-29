@@ -1,0 +1,88 @@
+@startuml
+
+class Person {
+    -id: int
+    -name: str
+}
+
+class Student {
+    -plans: List[Plan]
+    +add_plan(plan: Plan)
+    +check_conflicts() : List[Conflict]
+}
+
+class Instructor {
+    +view_classes(course: Course) : List[CourseClass]
+}
+
+class Course {
+    -id: str
+    -name: str
+}
+
+abstract class CoursePlan {
+    -course: Course
+    -year: int
+    -semester: int
+}
+
+class PlannedClass {
+    -prefix: str
+    -section: int
+}
+
+class CourseClass {
+    -time: Time
+    -instructor: Instructor
+    -timeslot: TimeSlot
+    -capacity: int
+    -year: int
+    -semester: int
+}
+
+class Time {
+    -start_time: datetime
+    -end_time: datetime
+}
+
+class TimeSlot {
+    -days: str
+    -time: Time
+}
+
+class Plan {
+    -student: Student
+    -course_plans: List[CoursePlan]
+}
+
+class CourseSchedule {
+    -course_classes: Dict[Course, List[CourseClass]]
+    +add_course_class(course: Course, course_class: CourseClass)
+    +check_attendance() : Dict[Course, List[Plan]]
+    +check_conflicts() : List[Conflict]
+    +check_missing_classes() : Dict[Course, List[PlannedClass]]
+}
+
+class Conflict {
+    -plan1: Plan
+    -plan2: Plan
+}
+
+Person <|-- Student : is a
+Person <|-- Instructor : is a
+
+CoursePlan <|-- PlannedClass : is a
+CoursePlan <|-- CourseClass : is a
+
+Student "1" *--> "1..*" Plan : has
+Plan "1" *--> "1..*" CoursePlan : has
+
+Course "1" *--> "1..*" CoursePlan : has
+Course "1" *--> "1..*" PlannedClass : has
+Course "1" *--> "1..*" CourseClass : has
+
+CourseSchedule "1" o--> "1..*" Course : has
+CourseSchedule "1" o--> "1..*" CourseClass : has
+CourseSchedule "1" o--> Conflict : has
+
+@enduml
