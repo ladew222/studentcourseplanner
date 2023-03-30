@@ -1,3 +1,6 @@
+class Course:
+    def __init__(self):
+
 class CourseSchedule:
     def __init__(self):
         # Initialize an empty list to store courses in the schedule
