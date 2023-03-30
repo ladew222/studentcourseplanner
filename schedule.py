@@ -1,5 +1,6 @@
 class Course:
     def __init__(self, course_name, course_id):
+        # Variables for course are named as course_name and course_id.
         self.course_name = course_name
         self.course_id = course_id
 
