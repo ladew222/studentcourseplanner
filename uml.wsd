@@ -7,11 +7,12 @@ class Person {
 
 class Student {
     -plans: List[Plan]
-    +check_conflicts(): List[Conflict]
+    +add_plan(plan: Plan)
+    +check_conflicts() : List[Conflict]
 }
 
 class Instructor {
-    +get_classes(course: Course) : List[ScheduledClass]
+    +view_classes(course: Course) : List[CourseClass]
 }
 
 class Course {
@@ -19,34 +20,22 @@ class Course {
     -name: str
 }
 
-abstract class CourseClass {
-    -time: Time
-    -instructor: Instructor
-    -timeslot: TimeSlot
-    -capacity: int
-    -year: int
-    -section: int
-    -semester: int
-    -planne_attendance: int
-}
-
-class ScheduledClass {
-    -time: Time
-    -instructor: Instructor
-    -timeslot: TimeSlot
-    -capacity: int
-    -year: int
-    -section: int
-    -semester: int
-}
-
-class Plan {
-    -student: Student
-    -planned_classes: List[PlannedCourse]
-}
-
-class PlannedCourse {
+abstract class CoursePlan {
     -course: Course
+    -year: int
+    -semester: int
+}
+
+class PlannedClass {
+    -prefix: str
+    -section: int
+}
+
+class CourseClass {
+    -time: Time
+    -instructor: Instructor
+    -timeslot: TimeSlot
+    -capacity: int
     -year: int
     -semester: int
 }
@@ -61,13 +50,17 @@ class TimeSlot {
     -time: Time
 }
 
+class Plan {
+    -student: Student
+    -course_plans: List[CoursePlan]
+}
+
 class CourseSchedule {
-    -scheduled_classes: Dict[Course, List[ScheduledClass]]
-    -missing_classes: Dict[Course, List[PlannedCourse]]
-    -conflicts: List[Conflict]
-    +add_class(course: Course, scheduled_class: ScheduledClass)
-    +check_schedule() : Dict[Course, List[Student]]
-    +check_missing() : Dict[Course, List[PlannedCourse]]
+    -course_classes: Dict[Course, List[CourseClass]]
+    +add_course_class(course: Course, course_class: CourseClass)
+    +check_attendance() : Dict[Course, List[Plan]]
+    +check_conflicts() : List[Conflict]
+    +check_missing_classes() : Dict[Course, List[PlannedClass]]
 }
 
 class Conflict {
@@ -75,20 +68,21 @@ class Conflict {
     -plan2: Plan
 }
 
-Person <|-- Student
-Person <|-- Instructor
+Person <|-- Student : is a
+Person <|-- Instructor : is a
 
-CourseClass <|-- ScheduledClass
-CourseClass <|-- PlannedCourse
+CoursePlan <|-- PlannedClass : is a
+CoursePlan <|-- CourseClass : is a
 
-Student "1" *--> "1..*" Plan
-Plan "1" *--> "1..*" PlannedCourse
+Student "1" *--> "1..*" Plan : has
+Plan "1" *--> "1..*" CoursePlan : has
 
-Course "1" *--> "1..*" ScheduledClass
-Course "1" *--> "1..*" PlannedCourse
+Course "1" *--> "1..*" CoursePlan : has
+Course "1" *--> "1..*" PlannedClass : has
+Course "1" *--> "1..*" CourseClass : has
 
-CourseSchedule "1" o--> "1..*" Course
-CourseSchedule "1" o--> "1..*" ScheduledClass
-CourseSchedule "1" o--> Conflict
+CourseSchedule "1" o--> "1..*" Course : has
+CourseSchedule "1" o--> "1..*" CourseClass : has
+CourseSchedule "1" o--> Conflict : has
 
 @enduml
