@@ -1,7 +1,7 @@
 class Course:
-    def __init__(self, name, id):
-        self.name = course_name
-        self.id = course_id
+    def __init__(self, course_name, course_id):
+        self.course_name = course_name
+        self.course_id = course_id
 
 class CourseSchedule:
     def __init__(self):
