@@ -1,11 +1,12 @@
 class Course:
-    def __init__(self):
+    def __init__(self, name, id):
+        self.name = course_name
+        self.id = course_id
 
 class CourseSchedule:
     def __init__(self):
         # Initialize an empty list to store courses in the schedule
         self.courses = []
-        
     
     def add_course(self, course):
         # Add a course to the schedule
