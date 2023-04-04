@@ -18,3 +18,4 @@ class Teacher(Person):
         super().__init__(name, age, address)
         self.teacher_id = teacher_id
         self.subject = subject
+ 
