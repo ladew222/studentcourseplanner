@@ -14,7 +14,15 @@ class planned_course:
         self.semester = semester
     
 class scheduled_class:
-    def __init__():
+    def __init__(self, time, instructor, timeslot, capacity, year, section, semester):
+        # Initialize a new scheduled class object with a time, instructor, timeslot, capacity, year, section and semester.
+        self.time = time
+        self.instructor = instructor
+        self.timeslot = timeslot
+        self.capacity = capacity
+        self.year = year
+        self.section = section
+        self.semester = semester
 
 class CourseSchedule:
     def __init__(self):
