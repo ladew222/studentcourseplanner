@@ -5,15 +5,15 @@ class Course:
         self.course_name = course_name
         self.course_id = course_id
         
-class planned_course:
-    def __init__(self,course_name, course_id, year, semester):
+class PlannedCourse:
+    def __init__(self, course_name, course_id, year, semester):
         # Initialize a new planned course object with a name, id, year and semester.
         # This object inherits the name and id from our course class.
         super().__init__(course_name, course_id)
         self.year = year
         self.semester = semester
     
-class scheduled_class:
+class ScheduledClass:
     def __init__(self, time, instructor, timeslot, capacity, year, section, semester):
         # Initialize a new scheduled class object with a time, instructor, timeslot, capacity, year, section and semester.
         self.time = time
