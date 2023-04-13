@@ -1,5 +1,7 @@
 from people import Person, Student, Teacher
 from schedule import CourseSchedule
+import os
+import csv
 def main():
     # Create instances of the classes
     p = Person("John", 30, "123 Main St.")
