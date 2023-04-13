@@ -42,6 +42,13 @@ class CourseSchedule:
         # Get a list of courses that a given student is enrolled in
         return [course for course in self.courses if student in course.students]
     
+    def check_missing(self, course, student_plan):
+        # Return the classes that are missing from the student's plan
+        if course in student_plan:
+            return True
+        else:
+            course.add_course 
+    
     def get_courses_by_teacher(self, teacher):
         # Get a list of courses that a given teacher is teaching
         return [course for course in self.courses if teacher == course.teacher]
