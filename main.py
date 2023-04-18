@@ -14,7 +14,8 @@ def main():
     # Load scheduled classes
     course_schedule = CourseSchedule()
     file = os.path.join( "data", "scheduled_classes.csv")
-    load_scheduled_classes(file, course_schedule)
+    all_schedules = load_scheduled_classes(file, course_schedule)
+    print("Course Schedule")
 
         
 if __name__ == '__main__':
