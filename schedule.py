@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class Course:
     def __init__(self, course_id, course_name):
         # Initialize a new Couse with a name and id.
@@ -45,3 +47,15 @@ class CourseSchedule:
     def get_courses_by_teacher(self, teacher):
         # Get a list of courses that a given teacher is teaching
         return [course for course in self.courses if teacher == course.teacher]
+    
+
+class Time:
+    def __init__(self, start_time: datetime, end_time: datetime):
+        self.start_time = start_time
+        self.end_time = end_time
+
+class TimeSlot:
+    def __init__(self, days: str, time: Time):
+        self.days = days
+        self.time = time
+

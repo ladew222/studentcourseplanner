@@ -13,9 +13,8 @@ class Student(Person):
         self.plans.append(plan)
 
 class Teacher(Person):
-    def __init__(self, name, age, address, teacher_id, subject):
+    def __init__(self, teacher_id, name):
         # Initialize a new Teacher object with a name, age, address, teacher ID, and subject
-        super().__init__(name, age, address)
+        super().__init__(id,name)
         self.teacher_id = teacher_id
-        self.subject = subject
  

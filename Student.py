@@ -1,7 +1,7 @@
 import csv
 from typing import Dict
-#from schedule import Course, CourseClass, CourseSchedule, Time, TimeSlot
-#from people import Instructor
+from schedule import Course, ScheduledClass, CourseSchedule, Time, TimeSlot
+from people import Teacher, Student
 
 def load_scheduled_classes(csv_path: str, course_schedule: CourseSchedule):
     instructors = {}
@@ -14,9 +14,9 @@ def load_scheduled_classes(csv_path: str, course_schedule: CourseSchedule):
             sec_name, title, sec_mthd, wks, sec_start, credits, days, time_start, time_end, room, instructor_id, capacity, semester, year = row
             
             # Create Instructor object if not already exists
-            instructor_id = int(instructor_id)
+            instructor_id = instructor_id
             if instructor_id not in instructors:
-                instructors[instructor_id] = Instructor(instructor_id, f"Instructor {instructor_id}")
+                instructors[instructor_id] = Teacher(instructor_id, f"Instructor {instructor_id}")
             
             # Create Course object if not already exists
             course_id = sec_name.split('-')[0]
@@ -28,5 +28,7 @@ def load_scheduled_classes(csv_path: str, course_schedule: CourseSchedule):
             timeslot = TimeSlot(days, time)
             
             # Create CourseClass object and add it to CourseSchedule
-            course_class = CourseClass(time, instructors[instructor_id], timeslot, int(capacity), int(year), semester)
-            course_schedule.add_course_class(courses[course_id], course_class)
+            section=1
+            course_class = ScheduledClass(time, instructors[instructor_id], timeslot, int(capacity), int(year),section, semester)
+            course_schedule.add_course(course_class)
+    return course_schedule
