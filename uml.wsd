@@ -1,5 +1,6 @@
 @startuml
 
+
 class Person {
     -id: int
     -name: str
@@ -53,9 +54,9 @@ class TimeSlot {
 }
 
 class StudentPlan {
-    -plans: List[PlannedClass]
+    -plans: List[PlannedCourse]
     -student: Student
-    +add_planned_class(planned_class: PlannedClass)
+    +add_planned_class(planned_class: PlannedCourse)
 }
 
 Person <|-- Student : is a
@@ -66,6 +67,9 @@ Course <|-- PlannedCourse : is a
 Student "1" *--> "1..*" StudentPlan : has
 StudentPlan "1" *--> "1..*" PlannedCourse : has
 
+CourseSchedule "1" o--> "1..*" Course : has
 CourseSchedule "1" o--> "1..*" ScheduledClass : has
+Course "1" *--> "1..*" PlannedCourse : has
+Course "1" *--> "1..*" ScheduledClass : has
 
 @enduml
