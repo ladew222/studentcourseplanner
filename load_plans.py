@@ -30,6 +30,7 @@ def load_student_plans(csv_path: str) -> List[Student]:
                 student = Student(student_id, f"Student {student_id}",[])
                 student.add_plan(StudentPlan(student))
                 student_plans[student_id] = student
+                students[student_id] = student
 
             if course_id not in courses:
                 courses[course_id] = Course(course_id, f"Course {course_id}")
