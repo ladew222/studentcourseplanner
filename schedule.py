@@ -1,15 +1,15 @@
 class Course:
-    def __init__(self, course_name, course_id):
+    def __init__(self, course_id, course_name):
         # Initialize a new Couse with a name and id.
         # Variables for course are named as course_name and course_id.
         self.course_name = course_name
         self.course_id = course_id
 
-class PlannedCourse:
-    def __init__(self, course_name, course_id, year, semester):
+class PlannedCourse(Course):
+    def __init__(self,course, year, semester):
         # Initialize a new planned course object with a name, id, year and semester.
         # This object inherits the name and id from our course class.
-        super().__init__(course_name, course_id)
+        super().__init__(course.course_id, course.course_name)
         self.year = year
         self.semester = semester
     

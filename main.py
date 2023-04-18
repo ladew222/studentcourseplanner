@@ -1,34 +1,19 @@
 from people import Person, Student, Teacher
 from schedule import CourseSchedule
+from load_plans import load_student_plans
 import os
 import csv
 import time
 def main():
-    student_plans = []
-    file = os.path.join("studentcourseplanner\data", "student_plans.csv")
-    with open(file, "r") as file:
-        readCSV = csv.DictReader(file)
-        next(readCSV)
-        # assigns each row to a variable
-        for row in readCSV:
-            student_id = int(row['student_id'])
-            year = int(row['year'])
-            semester = row['semester']
-            course = row['course']
-            
-            # creates a dictionary
-            plans = {'year': year,'semester': semester, 'course': course}
-            index = None
-            for i, plan in enumerate(student_plans):
-                if plan['student_id'] == student_id:
-                    index = i
-                    break
-            if index is not None:
-                student_plans[index]['student_plan'].append(plans)
-            else:
-                new_student = {'student_id': student_id, 'student_plan': [plans]}
-                student_plans.append(new_student)
-        print(student_plans) 
+    # Load student plans
+    file = os.path.join("data","student_plans.csv")
+    student_list = load_student_plans(file)
+    
+    # Load scheduled classes
+ ##   course_schedule = CourseSchedule()
+ ##   file = os.path.join("studentcourseplanner", "data", "scheduled_classes.csv")
+ ##   load_scheduled_classes(file, course_schedule)
+
         
 if __name__ == '__main__':
     main()
