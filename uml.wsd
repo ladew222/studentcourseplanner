@@ -6,38 +6,40 @@ class Person {
 }
 
 class Student {
-    -plans: List[Plan]
-    +add_plan(plan: Plan)
-    +check_conflicts() : List[Conflict]
+    -plans: List[StudentPlan]
+    +add_plan(plan: StudentPlan)
 }
 
-class Instructor {
-    +view_classes(course: Course) : List[CourseClass]
+class Teacher {
+    -teacher_id: int
 }
 
 class Course {
-    -id: str
-    -name: str
+    -course_id: str
+    -course_name: str
 }
 
-abstract class CoursePlan {
-    -course: Course
+class PlannedCourse {
     -year: int
-    -semester: int
+    -semester: str
 }
 
-class PlannedClass {
-    -prefix: str
-    -section: int
-}
-
-class CourseClass {
+class ScheduledClass {
     -time: Time
     -instructor: Instructor
     -timeslot: TimeSlot
     -capacity: int
     -year: int
-    -semester: int
+    -section: int
+    -semester: str
+}
+
+class CourseSchedule {
+    -courses: List[ScheduledClass]
+    +add_course(course: ScheduledClass)
+    +remove_course(course: ScheduledClass)
+    +get_courses_by_student(student: Student): List[ScheduledClass]
+    +get_courses_by_teacher(teacher: Teacher): List[ScheduledClass]
 }
 
 class Time {
@@ -50,39 +52,20 @@ class TimeSlot {
     -time: Time
 }
 
-class Student_Plan {
+class StudentPlan {
+    -plans: List[PlannedClass]
     -student: Student
-    -course_plans: List[CoursePlan]
-}
-
-class CourseSchedule {
-    -course_classes: Dict[Course, List[CourseClass]]
-    +add_course_class(course: Course, course_class: CourseClass)
-    +check_attendance() : Dict[Course, List[Plan]]
-    +check_conflicts() : List[Conflict]
-    +check_missing_classes() : Dict[Course, List[PlannedClass]]
-}
-
-class Conflict {
-    -plan1: Plan
-    -plan2: Plan
+    +add_planned_class(planned_class: PlannedClass)
 }
 
 Person <|-- Student : is a
-Person <|-- Instructor : is a
+Person <|-- Teacher : is a
 
-CoursePlan <|-- PlannedClass : is a
-CoursePlan <|-- CourseClass : is a
+Course <|-- PlannedCourse : is a
 
-Student "1" *--> "1..*" Plan : has
-Plan "1" *--> "1..*" CoursePlan : has
+Student "1" *--> "1..*" StudentPlan : has
+StudentPlan "1" *--> "1..*" PlannedCourse : has
 
-Course "1" *--> "1..*" CoursePlan : has
-Course "1" *--> "1..*" PlannedClass : has
-Course "1" *--> "1..*" CourseClass : has
-
-CourseSchedule "1" o--> "1..*" Course : has
-CourseSchedule "1" o--> "1..*" CourseClass : has
-CourseSchedule "1" o--> Conflict : has
+CourseSchedule "1" o--> "1..*" ScheduledClass : has
 
 @enduml
