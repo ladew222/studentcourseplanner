@@ -9,6 +9,8 @@ class Student(Person):
         # Initialize a new Student object 
         super().__init__(id, name)
         self.plans = plans
+    def add_plan(self, plan):
+        self.plans.append(plan)
 
 class Teacher(Person):
     def __init__(self, name, age, address, teacher_id, subject):

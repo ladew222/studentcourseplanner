@@ -5,10 +5,17 @@ from people import Person, Student, Teacher
 from schedule import Course,PlannedCourse
 from plans import StudentPlan
 
+import os
+import csv
+from typing import List
+from people import Person, Student, Teacher
+from schedule import Course, PlannedCourse
+from plans import StudentPlan
+
 def load_student_plans(csv_path: str) -> List[Student]:
-    students = {}
+    student_plans = {}
     courses = {}
-    planed_courses = {}
+    students = {}
 
     with open(csv_path, "r") as file:
         readCSV = csv.DictReader(file)
@@ -19,17 +26,17 @@ def load_student_plans(csv_path: str) -> List[Student]:
             semester = row['semester']
             course_id = row['course']
             
-            if student_id not in students:
-                students[student_id] = Student(student_id, f"Student {student_id}", [])
-            
+            if student_id not in student_plans:
+                student = Student(student_id, f"Student {student_id}",[])
+                student.add_plan(StudentPlan(student))
+                student_plans[student_id] = student
+
             if course_id not in courses:
                 courses[course_id] = Course(course_id, f"Course {course_id}")
             
-            PlannedCourse_id = course_id + str(year) + semester
-            if PlannedCourse_id not in planed_courses:
-                planed_courses[PlannedCourse_id] = PlannedCourse(courses[course_id], year, semester)
-            
-            plan = StudentPlan(students[student_id])
-            students[student_id].add_plan(plan)
+            planned_class = PlannedCourse(courses[course_id], year, semester)
 
-    return list(students.values())
+            # Add the planned class to the student's plan
+            student_plans[student_id].plans[0].add_planned_class(planned_class)
+
+    return [s for s in students.values()]

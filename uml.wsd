@@ -50,7 +50,7 @@ class TimeSlot {
     -time: Time
 }
 
-class Plan {
+class Student_Plan {
     -student: Student
     -course_plans: List[CoursePlan]
 }
