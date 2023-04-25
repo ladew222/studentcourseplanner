@@ -46,3 +46,11 @@ def load_scheduled_classes(csv_path: str, course_schedule: CourseSchedule):
     
     # Return the updated CourseSchedule object
     return course_schedule
+
+def check_conflicts(self):
+    conflicts = []
+    if CourseSchedule.courses.timeslot[0]:
+        #I have to sort the classes by timeslot.
+        self.conflicts.append(courses)
+    #Implement a function to check if there are any conflicts between
+    #classes that students have scheduled based on the times for the classes from the schedule.

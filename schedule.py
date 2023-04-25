@@ -1,12 +1,13 @@
 from datetime import datetime
+from plans import StudentPlan
 
 class Course:
     def __init__(self, course_id, course_name):
-        # Initialize a new Couse with a name and id.
+        # Initialize a new Course with a name and id.
         # Variables for course are named as course_name and course_id.
         self.course_name = course_name
         self.course_id = course_id
-
+        
 class PlannedCourse(Course):
     def __init__(self,course, year, semester):
         # Initialize a new planned course object with a name, id, year and semester.
@@ -42,13 +43,17 @@ class CourseSchedule:
     
     def get_courses_by_student(self, student):
         # Get a list of courses that a given student is enrolled in
-        return [course for course in self.courses if student in course.students]
-    
+        return[course for course in self.courses if student in course.students]
+
     def get_courses_by_teacher(self, teacher):
         # Get a list of courses that a given teacher is teaching
         return [course for course in self.courses if teacher == course.teacher]
     
-
+    def check_schedule():
+        if CourseSchedule.courses != StudentPlan.plans:
+            print("A discrepency was detected between a planned course and the schedule.")
+    #Implement a function to assess whether a student's planned class is not on the schedule and give an alert
+    
 class Time:
     def __init__(self, start_time: datetime, end_time: datetime):
         self.start_time = start_time

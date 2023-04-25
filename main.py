@@ -20,3 +20,8 @@ def main():
         
 if __name__ == '__main__':
     main()
+    
+def get_course_type(course_id):
+    #getting the first four characters from course_id and slotting them into another variable
+    course_type = course_id[0:4]
+    return course_type
