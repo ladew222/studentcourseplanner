@@ -39,7 +39,7 @@ def load_scheduled_classes(csv_path: str, course_schedule: CourseSchedule):
             
             # Create a ScheduledClass object with the necessary information
             section = 1
-            course_class = ScheduledClass(time, instructors[instructor_id], timeslot, int(capacity), int(year), section, semester)
+            course_class = ScheduledClass(courses[course_id], time, instructors[instructor_id], timeslot, int(capacity), int(year), section, semester)
             
             # Add the ScheduledClass object to the CourseSchedule
             course_schedule.add_course(course_class)
