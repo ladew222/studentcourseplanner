@@ -17,7 +17,22 @@ def main():
     all_schedules = load_scheduled_classes(file, course_schedule)
     print("Course Schedule")
 
-        
+    # Loop through every student then course in schedule, store students that plan to take it in attendance
+    attendance = {}
+    for student in student_list:
+        for course in course_schedule.courses:
+            if attendance[course.course_id] == None:
+                attendance[course.course_id] = {}
+            attendance[course.course_id][course.year, course.semester, course.timeslot] = get_students_by_course(self, student, course)
+
+def get_students_by_course(self, student, course):
+    studentsList = []
+    for plan in student.plans:
+        for plannedCourse in plan.plannedCourses:
+            if plannedCourse.course_id == course.course_id and plannedCourse.year == course.year and plannedCourse.semester == course.semester and plannedCourse.timeslot == course.timeslot:
+                studentsList.append(student)
+    return studentsList
+
 if __name__ == '__main__':
     main()
     
