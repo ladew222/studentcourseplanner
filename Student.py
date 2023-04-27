@@ -39,7 +39,7 @@ def load_scheduled_classes(csv_path: str, course_schedule: CourseSchedule):
             
             # Create a ScheduledClass object with the necessary information
             section = 1
-            course_class = ScheduledClass(courses[course_id], time, instructors[instructor_id], timeslot, int(capacity), int(year), section, semester)
+            course_class = ScheduledClass(time, instructors[instructor_id], timeslot, int(capacity), int(year), section, semester)
             
             # Add the ScheduledClass object to the CourseSchedule
             course_schedule.add_course(course_class)
@@ -47,10 +47,33 @@ def load_scheduled_classes(csv_path: str, course_schedule: CourseSchedule):
     # Return the updated CourseSchedule object
     return course_schedule
 
-def check_conflicts(self):
-    conflicts = []
-    if CourseSchedule.courses.timeslot[0]:
-        #I have to sort the classes by timeslot.
-        self.conflicts.append(courses)
+#I wanted to get a sorting algorithm in, even if it isn't the best.
+def SwapStartTime(courses, i ,j):
+    temp = courses.start_time[i]
+    courses.start_time[i] = courses.start_time[j]
+    courses.start_time[j] = temp
+
+#Sorting classes by start time
+def SelectionSortStartTime(courses):
+    i = 0
+    while i <len(courses) - 1:
+        SmallestIndex = 1
+        j + i + 1
+        while j < len(courses):
+                if courses.start_time[j] < courses.start_time[SmallestIndex]:
+                    SmallestIndex = j
+                j += 1
+        if SmallestIndex != i:
+            SwapStartTime(courses, SmallestIndex, i)
+        i += 1 
+
+def check_conflicts(self, course):
+    conflicts = {course}
+    if CourseSchedule.courses.start_time[0] or CourseSchedule.courses.end_time[0]:
+        self.conflicts.append(conflicts)
+        #I can't do == because a class could be from 10 to 11 and another could be from 10:30 to 11:30.
+        #If I could subtract with base 60 and create a duration/interval variable that takes into acct each time within the start and end...
+        #Does python even recoginize time?
+        #
     #Implement a function to check if there are any conflicts between
     #classes that students have scheduled based on the times for the classes from the schedule.
