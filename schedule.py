@@ -64,4 +64,9 @@ class TimeSlot:
     def __init__(self, days: str, time: Time):
         self.days = days
         self.time = time
+        
+    def __eq__(self, other):
+        if isinstance(other, TimeSlot):
+            return self.days == other.days and self.time == other.time
+        return False
 
