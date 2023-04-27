@@ -19,7 +19,7 @@ def main():
     all_schedules = load_scheduled_classes(file, course_schedule)
 
     attendance = get_students_by_course(student_list, all_schedules)
-    conflicts = find_conflicting_courses(attendance)
+    conflicts = find_conflicting_courses(student_list, all_schedules)
     print("Conflicting courses:")
     print(conflicts)
 
@@ -55,13 +55,19 @@ def get_students_by_course(student_list, all_schedules):
     return attendance
 
 
-def find_conflicting_courses(attendance):
+def find_conflicting_courses(student_list, all_schedules):
     conflicts = {}
-    for course_id, course_data in attendance.items():
-        for time_key, students in course_data.items():
-            if len(students) > 1:
-                for student in students:
-                    if student.id not in conflicts:
-                        conflicts[student.id] = []
-                    conflicts[student.id].append((course_id, time_key))
+    for student in student_list:
+        for plan in student.plans:
+            for planned_course in plan.plans:
+                for scheduled_course in all_schedules.courses:
+                    if (planned_course.course.course_id == scheduled_course.course_id
+                        and planned_course.year == scheduled_course.year
+                        and planned_course.semester == scheduled_course.semester
+                        and planned_course.course.timeslot == scheduled_course.timeslot):
+                        
+                        if student.id not in conflicts:
+                            conflicts[student.id] = []
+                        conflicts[student.id].append((scheduled_course.course_id, (scheduled_course.year, scheduled_course.semester, scheduled_course.timeslot)))
+
     return conflicts
