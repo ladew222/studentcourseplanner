@@ -57,17 +57,43 @@ def get_students_by_course(student_list, all_schedules):
 
 def find_conflicting_courses(student_list, all_schedules):
     conflicts = {}
+
     for student in student_list:
-        for plan in student.plans:
-            for planned_course in plan.plans:
-                for scheduled_course in all_schedules.courses:
-                    if (planned_course.course.course_id == scheduled_course.course_id
-                        and planned_course.year == scheduled_course.year
-                        and planned_course.semester == scheduled_course.semester
-                        and planned_course.course.timeslot == scheduled_course.timeslot):
-                        
-                        if student.id not in conflicts:
-                            conflicts[student.id] = []
-                        conflicts[student.id].append((scheduled_course.course_id, (scheduled_course.year, scheduled_course.semester, scheduled_course.timeslot)))
+        for planned_course in student.plans:
+            for scheduled_class in all_schedules.courses:
+                if (planned_course.course.course_id == scheduled_class.course.course_id and
+                    planned_course.year == scheduled_class.year and
+                    planned_course.semester == scheduled_class.semester and
+                    planned_course.course.timeslot == scheduled_class.timeslot):
+                    if student.id not in conflicts:
+                        conflicts[student.id] = set()
+                    conflicts[student.id].add((planned_course, scheduled_class))
 
     return conflicts
+
+def find_conflicting_courses_v2(student_list, all_schedules):
+    conflicts = {}
+    scheduled_classes_set = set(all_schedules.courses)
+
+    for student in student_list:
+        planned_classes_set = set()
+        for plan in student.plans:
+            for planned_course in plan.plans:
+                scheduled_class = ScheduledClass(
+                    planned_course.course,
+                    None,  # Instructor not needed for the comparison
+                    TimeSlot(planned_course.course.timeslot.days, planned_course.course.timeslot.time),
+                    0,  # Capacity not needed for the comparison
+                    planned_course.year,
+                    0,  # Section not needed for the comparison
+                    planned_course.semester
+                )
+                planned_classes_set.add(scheduled_class)
+
+        intersection = planned_classes_set.intersection(scheduled_classes_set)
+
+        if intersection:
+            conflicts[student.id] = intersection
+
+    return conflicts
+
