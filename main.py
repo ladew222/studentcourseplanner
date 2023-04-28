@@ -90,10 +90,11 @@ def find_conflicting_courses_v2(student_list, all_schedules):
                 )
                 planned_classes_set.add(scheduled_class)
 
-        intersection = planned_classes_set.intersection(scheduled_classes_set)
+        intersection = planned_classes_set & scheduled_classes_set
 
         if intersection:
             conflicts[student.id] = intersection
 
     return conflicts
+
 
