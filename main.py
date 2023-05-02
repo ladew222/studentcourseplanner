@@ -52,10 +52,11 @@ def find_conflicting_courses(student_list, all_schedules):
                     class1.year == class2.year and
                     class1.timeslot == class2.timeslot):
                     if student.id not in conflicts:
-                        conflicts[student.id] = set()
-                    conflicts[student.id].add((class1, class2))
+                        conflicts[student.id] = (student, set())
+                    conflicts[student.id][1].add((class1, class2))
 
     return conflicts
+
 
 
 
