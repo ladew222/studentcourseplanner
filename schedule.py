@@ -59,6 +59,10 @@ class Time:
     def __init__(self, start_time: datetime, end_time: datetime):
         self.start_time = start_time
         self.end_time = end_time
+    def __eq__(self, other):
+        if isinstance(other, Time):
+            return self.start_time == other.start_time and self.end_time == other.end_time
+        return False
 
 class TimeSlot:
     def __init__(self, days: str, time: Time):
