@@ -104,7 +104,7 @@ student_id,year,semester,course
 7,2022,Fall,CSCI-160
 7,2022,Fall,MATH-150
 7,2022,Fall,MATH-230
-7,2023,Spring,VUSM-220
+7,2023,Fall,ENGL-103
 7,2023,Spring,VUSM-300
 7,2023,Spring,CSCI-200
 7,2024,Fall,MGMT-341
@@ -143,7 +143,7 @@ student_id,year,semester,course
 8,2023,Spring,MATH-330
 8,2023,Fall,BIOL-401
 8,2023,Fall,CSCI-401
-8,2023,Fall,MATH-401
+8,2023,Fall,ENGL-103
 8,2023,Spring,BIOL-301
 8,2023,Spring,MATH-499
 8,2023,Spring,MATH-402
@@ -160,7 +160,7 @@ student_id,year,semester,course
 9,2023,Spring,CSCI-210
 9,2023,Spring,MATH-202
 9,2023,Fall,BIOL-101
-9,2023,Fall,CSCI-310
+9,2023,Fall,ENGL-103
 9,2023,Fall,MATH-330
 9,2023,Spring,BIOL-201
 9,2023,Spring,CSCI-310
@@ -189,7 +189,7 @@ student_id,year,semester,course
 10,3,Spring,PHYS-202
 10,3,Spring,STAT-201
 10,4,Fall,BIOL-401
-10,4,Fall,PHIL-101
+10,4,Fall,ENGL-103
 10,4,Fall,MICR-301
 10,4,Spring,BIOL-402
 10,4,Spring,PHIl-201
@@ -229,7 +229,7 @@ student_id,year,semester,course
 12,2022,Spring,PHIl-201
 12,2022,Spring,CSCI-210
 12,2022,Spring,MATH-202
-12,2023,Fall,BIOL-101
+12,2023,Fall,ENGL-103
 12,2023,Fall,CSCI-310
 12,2023,Fall,MATH-330
 12,2023,Spring,BIOL-201
@@ -252,7 +252,7 @@ student_id,year,semester,course
 13,2021,Fall,MATH-230
 13,2021,Spring,PHIl-201
 13,2021,Spring,CSCI-210
-13,2021,Spring,MATH 202
+13,2021,Fall,ENGL-103
 13,2022,Fall,BIOL-101
 13,2022,Fall,CSCI-310
 13,2022,Fall,MATH-330
@@ -279,7 +279,7 @@ student_id,year,semester,course
 14,2022,Spring,MATH-202
 14,2023,Fall,BIOL-101
 14,2023,Fall,CSCI-310
-14,2023,Fall,MATH-330
+14,2023,Fall,ENGL-103
 14,2023,Spring,BIOL-201
 14,2023,Spring,CSCI-310
 14,2023,Spring,MATH-330
