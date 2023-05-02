@@ -1,7 +1,7 @@
 sec_name,title,sec_mthd,wks,sec_start,credits,days,time_start,time_end,room,instructor,capacity,semester,year
 CSCI-160,Principles of Computer Science,CAMPUS,16,08/30/2023,3,MWF,9:05am,10:00am,NONE,Jones,35,Fall,2023
 CSCI-110,Introduction to App Development,CAMPUS,16,08/30/2023,3,TTH,12:30pm,1:50pm,NONE,Lee,35,Fall,2023
-CSCI-310,Software Engineering,CAMPUS,16,08/30/2023,3,MWF,11:15am,12:10pm,NONE,Smith,35,Fall,2023
+CSCI-310,Software Engineering,CAMPUS,16,08/30/2023,3,MWF,9:05am,10:00am,NONE,Smith,35,Fall,2023
 CSCI-210,Networking and Cloud Interface,CAMPUS,16,08/30/2023,3,TTH,9:00am,10:20am,NONE,Wu,35,Fall,2023
 ENGL-103,English Composition I,CAMPUS,16,08/30/2023,3,MWF,9:05am,10:00am,NONE,Thompson,35,Fall,2023
 VUSM-FVT,First Year Seminar,CAMPUS,16,08/28/2023,3,TTH,11:00am,12:20pm,NONE,Brown,20,Fall,2023
