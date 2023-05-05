@@ -50,9 +50,15 @@ class CourseSchedule:
         # Get a list of courses that a given teacher is teaching
         return [course for course in self.courses if teacher == course.teacher]
     
-    def check_schedule():
-        if CourseSchedule.courses != StudentPlan.plans:
-            print("A discrepency was detected between a planned course and the schedule.")
+    def check_schedule(self, StudentPlan):
+        if self.courses != StudentPlan.plans:
+            current_plan = StudentPlan.plans[0]
+            for PlannedCourse in current_plan:
+                for current_plan in self.courses:
+                    if current_plan.course_id == PlannedCourse.course_id:
+                        return True
+        print("A discrepency was detected between a planned course and the schedule.")
+        return False
     #Implement a function to assess whether a student's planned class is not on the schedule and give an alert
     
 class Time:

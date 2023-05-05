@@ -49,7 +49,7 @@ def load_scheduled_classes(csv_path: str, course_schedule: CourseSchedule):
     # Return the updated CourseSchedule object
     return course_schedule
 
-#I wanted to get a sorting algorithm in, even if it isn't the best.
+'''#I wanted to get a sorting algorithm in, even if it isn't the best.
 def SwapStartTime(courses, i ,j):
     temp = courses.start_time[i]
     courses.start_time[i] = courses.start_time[j]
@@ -78,4 +78,4 @@ def check_conflicts(self, course):
         #Does python even recoginize time?
         #
     #Implement a function to check if there are any conflicts between
-    #classes that students have scheduled based on the times for the classes from the schedule.
+    #classes that students have scheduled based on the times for the classes from the schedule.'''
