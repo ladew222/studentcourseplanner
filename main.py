@@ -14,19 +14,23 @@ def get_course_type(course_id):
     course_type = course_id[0:4]
     return course_type
 
-
+# Get list and number of students in a class
 def get_students_by_course(student_list, all_schedules):
     attendance = {}
     for student in student_list:
         for course in all_schedules.courses:
             for plan in student.plans:
                 for plannedCourse in plan.plans:
-                    if plannedCourse.course.course_id == course.course_id and plannedCourse.year == course.year and plannedCourse.semester == course.semester and plannedCourse.course.timeslot == course.timeslot:
+                    if plannedCourse.course_id == course.course_id and plannedCourse.year == course.year and plannedCourse.semester == course.semester:
                         if course.course_id not in attendance:
                             attendance[course.course_id] = {}
-                        if (course.year, course.semester, course.timeslot) not in attendance[course.course_id]:
-                            attendance[course.course_id][(course.year, course.semester, course.timeslot)] = []
-                        attendance[course.course_id][(course.year, course.semester, course.timeslot)].append(student)
+                        if (course.year, course.semester) not in attendance[course.course_id]:
+                            attendance[course.course_id][(course.year, course.semester)] = {}
+                        if "Student List" not in attendance[course.course_id][(course.year, course.semester)]:
+                            attendance[course.course_id][(course.year, course.semester)]["Student List"] = []
+                            attendance[course.course_id][(course.year, course.semester)]["Student Count"] = 0
+                        attendance[course.course_id][(course.year, course.semester)]["Student List"].append(student)
+                        attendance[course.course_id][(course.year, course.semester)]["Student Count"] += 1
     return attendance
 
 
@@ -60,6 +64,23 @@ def find_conflicting_courses(student_list, all_schedules):
 
 
 
+# Check for courses planned for in a given year/semester, make sure they are actually offered in the schedule. If not -> add to list 
+def find_missing_courses(student_list, all_schedules):
+    missing_courses = {}
+    scheduled_ids = {}
+    for scheduled_course in all_schedules.courses:
+        if (scheduled_course.year, scheduled_course.semester) not in scheduled_ids:
+            scheduled_ids[(scheduled_course.year, scheduled_course.semester)] = []
+        scheduled_ids[(scheduled_course.year, scheduled_course.semester)].append(scheduled_course.course_id)
+    for student in student_list:
+        for plan in student.plans:
+            for planned_course in plan.plans:
+                if planned_course.course_id not in scheduled_ids[(planned_course.year, planned_course.semester)]:
+                    if planned_course not in missing_courses:
+                        missing_courses.append(planned_course)
+    return missing_courses
+
+
 
 def get_students_by_course(student, course):
     studentsList = []
@@ -76,7 +97,7 @@ def main():
     # Load student plans
     file = os.path.join("data", "student_plans.csv")
     student_list = load_student_plans(file)
-
+    test = PlannedCourse()
     # Load scheduled classes
     course_schedule = CourseSchedule()
     file = os.path.join("data", "scheduled_classes.csv")
@@ -86,6 +107,9 @@ def main():
     conflicts = find_conflicting_courses(student_list, all_schedules)
     print("Conflicting courses:")
     print(conflicts)
+
+    # Load list of PlannedCourse objects that are planned but not on the schedule
+    missing_courses = find_missing_courses(student_list, all_schedules)
 
 
 if __name__ == '__main__':
