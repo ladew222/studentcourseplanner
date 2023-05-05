@@ -86,7 +86,7 @@ def get_students_by_course(student, course):
     studentsList = []
     for plan in student.plans:
         for plannedCourse in plan.plannedCourses:
-            if plannedCourse.course_id == course.course_id and plannedCourse.year == course.year and plannedCourse.semester == course.semester and plannedCourse.timeslot == course.timeslot:
+            if plannedCourse.course_id == course.course_id and plannedCourse.year == course.year and plannedCourse.semester == course.semester:
                 studentsList.append(student)
     return studentsList
 
@@ -97,7 +97,7 @@ def main():
     # Load student plans
     file = os.path.join("data", "student_plans.csv")
     student_list = load_student_plans(file)
-    test = PlannedCourse()
+
     # Load scheduled classes
     course_schedule = CourseSchedule()
     file = os.path.join("data", "scheduled_classes.csv")
