@@ -66,12 +66,14 @@ def find_conflicting_courses(student_list, all_schedules):
 
 # Check for courses planned for in a given year/semester, make sure they are actually offered in the schedule. If not -> add to list 
 def find_missing_courses(student_list, all_schedules):
-    missing_courses = {}
+    # Create and populate scheduled_ids in order to compare with planned courses
     scheduled_ids = {}
     for scheduled_course in all_schedules.courses:
         if (scheduled_course.year, scheduled_course.semester) not in scheduled_ids:
             scheduled_ids[(scheduled_course.year, scheduled_course.semester)] = []
         scheduled_ids[(scheduled_course.year, scheduled_course.semester)].append(scheduled_course.course_id)
+
+    missing_courses = {}
     for student in student_list:
         for plan in student.plans:
             for planned_course in plan.plans:
@@ -79,16 +81,6 @@ def find_missing_courses(student_list, all_schedules):
                     if planned_course not in missing_courses:
                         missing_courses.append(planned_course)
     return missing_courses
-
-
-
-def get_students_by_course(student, course):
-    studentsList = []
-    for plan in student.plans:
-        for plannedCourse in plan.plannedCourses:
-            if plannedCourse.course_id == course.course_id and plannedCourse.year == course.year and plannedCourse.semester == course.semester:
-                studentsList.append(student)
-    return studentsList
 
 
 
