@@ -14,24 +14,43 @@ def get_course_type(course_id):
     course_type = course_id[0:4]
     return course_type
 
-# Get list and number of students in a class
-def get_students_by_course(student_list, all_schedules):
-    attendance = {}
+# Get list and number of students in a (not necessarily scheduled) planned class
+def get_planned_attendance(student_list, all_schedules):
+    plannedAttendance = {}
     for student in student_list:
+        for plan in student.plans:
+            for plannedCourse in plan.plans:
+                if plannedCourse.course_id not in plannedAttendance:
+                    plannedAttendance[plannedCourse.course_id] = {}
+                if plannedCourse.year not in plannedAttendance[plannedCourse.course_id]:
+                    plannedAttendance[plannedCourse.course_id][plannedCourse.year] = {}
+                if plannedCourse.semester not in plannedAttendance[plannedCourse.course_id][plannedCourse.year]:
+                    plannedAttendance[plannedCourse.course_id][plannedCourse.year][plannedCourse.semester] = {}
+
+                if "Student List" not in plannedAttendance[plannedCourse.course_id][plannedCourse.year][plannedCourse.semester]:
+                    plannedAttendance[plannedCourse.course_id][plannedCourse.year][plannedCourse.semester]["Student List"] = []
+                    plannedAttendance[plannedCourse.course_id][plannedCourse.year][plannedCourse.semester]["Student Count"] = 0
+                plannedAttendance[plannedCourse.course_id][plannedCourse.year][plannedCourse.semester]["Student List"].append(student)
+                plannedAttendance[plannedCourse.course_id][plannedCourse.year][plannedCourse.semester]["Student Count"] += 1
+    return plannedAttendance
+
+# Get list and number of students in a scheduled class
+def get_scheduled_attendance(plannedAttendance, all_schedules):
+    scheduledAttendance = {}
+    for plannedCourseId in plannedAttendance:
         for course in all_schedules.courses:
-            for plan in student.plans:
-                for plannedCourse in plan.plans:
-                    if plannedCourse.course_id == course.course_id and plannedCourse.year == course.year and plannedCourse.semester == course.semester:
-                        if course.course_id not in attendance:
-                            attendance[course.course_id] = {}
-                        if (course.year, course.semester) not in attendance[course.course_id]:
-                            attendance[course.course_id][(course.year, course.semester)] = {}
-                        if "Student List" not in attendance[course.course_id][(course.year, course.semester)]:
-                            attendance[course.course_id][(course.year, course.semester)]["Student List"] = []
-                            attendance[course.course_id][(course.year, course.semester)]["Student Count"] = 0
-                        attendance[course.course_id][(course.year, course.semester)]["Student List"].append(student)
-                        attendance[course.course_id][(course.year, course.semester)]["Student Count"] += 1
-    return attendance
+            if plannedCourseId == course.course_id and not (not plannedAttendance[plannedCourseId][course.year]) and not (not plannedAttendance[plannedCourseId][course.year][course.semester]):
+                if course.course_id not in scheduledAttendance:
+                    scheduledAttendance[course.course_id] = {}
+                if course.year not in scheduledAttendance[course.course_id]:
+                    scheduledAttendance[course.course_id][course.year] = {}
+                if course.semester not in scheduledAttendance[course.course_id][course.year]:
+                    scheduledAttendance[course.course_id][course.year][course.semester] = {}
+
+                scheduledAttendance[course.course_id][course.year][course.semester]["Student List"] = plannedAttendance[plannedCourse.course_id][plannedCourse.year][plannedCourse.semester]["Student List"]
+                scheduledAttendance[course.course_id][course.year][course.semester]["Student Count"] = plannedAttendance[plannedCourse.course_id][plannedCourse.year][plannedCourse.semester]["Student Count"]
+    return scheduledAttendance
+
 
 
 def find_conflicting_courses(student_list, all_schedules):
@@ -95,7 +114,9 @@ def main():
     file = os.path.join("data", "scheduled_classes.csv")
     all_schedules = load_scheduled_classes(file, course_schedule)
 
-    ##attendance = get_students_by_course(student_list, all_schedules)
+    plannedAttendance = get_planned_attendance(student_list, all_schedules)
+    scheduledAttendance = get_scheduled_attendance(student_list, all_schedules)
+
     conflicts = find_conflicting_courses(student_list, all_schedules)
     print("Conflicting courses:")
     print(conflicts)
